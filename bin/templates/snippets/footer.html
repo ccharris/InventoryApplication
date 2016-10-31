@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<div class="navbar navbar-fixed-bottom" th:fragment="footer">
+		<div class="container col-md-8 col-md-offset-1">
+		&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2016</span> Yarn Barn
+		</div>
+	</div>
+</body>
+</html>
