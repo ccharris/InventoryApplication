@@ -12,6 +12,7 @@ insert into inventoryManagement.users (first_name, last_name, password, email, p
 insert into inventoryManagement.users (first_name, last_name, password, email, phone_number, active) values ('Ethan', 'Ransdell', 'def456', 'erandsdell@email.com', '123-456-1234', true);
 insert into inventoryManagement.users (first_name, last_name, password, email, phone_number, active) values ('Sydney', 'Haggard', 'lol123', 'shaggard@email.com', '123-456-4321', true);
 insert into inventoryManagement.users (first_name, last_name, password, email, phone_number, active) values ('Carolyn', 'Harris', 'password123', 'charris@yarnbarn.com', '123-456-5566', true);
+insert into inventoryManagement.users (first_name, last_name, password, email, phone_number, active) values ('Paul', 'OConnor', 'testtest', 'poconnor@email.com', '123-456-5566', true);
 
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'spratt@email.com'), 'USER');
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'erandsdell@email.com'), 'USER');
