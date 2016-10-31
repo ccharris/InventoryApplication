@@ -18,3 +18,4 @@ insert into inventoryManagement.user_roles (user_id, role) values ((select id fr
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'erandsdell@email.com'), 'USER');
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'shaggard@email.com'), 'USER');
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'charris@yarnbarn.com'), 'USER');
+insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'poconnor@email.com'), 'USER');
