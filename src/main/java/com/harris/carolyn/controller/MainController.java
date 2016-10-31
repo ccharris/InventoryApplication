@@ -1,7 +1,5 @@
 package com.harris.carolyn.controller;
 
-import java.io.IOException;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -14,13 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.harris.carolyn.beans.Product;
 import com.harris.carolyn.beans.User;
+import com.harris.carolyn.beans.UserRole;
 import com.harris.carolyn.repository.ProductRepository;
 import com.harris.carolyn.repository.UserRepository;
+import com.harris.carolyn.repository.UserRoleRepository;
 
 @Controller
 public class MainController {
@@ -30,6 +28,8 @@ public class MainController {
 	private ProductRepository productRepo;
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private UserRoleRepository userRoleRepo;
 
 	@GetMapping("")
 	public String index(Model model) {
@@ -128,6 +128,28 @@ public class MainController {
 	public String loginSubmit() {
 		return "index";
 	}
+	
+	@GetMapping("/signup")
+	public String signup(Model model) {
+		model.addAttribute(new User());
+		return "signup";
+	}
+
+	@PostMapping("signup")
+	public String signupSave(@ModelAttribute @Valid User user,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("user", user);
+			return "signup";
+		} else {
+			userRepo.save(user);
+			UserRole ur = new UserRole(user.getId());
+			userRoleRepo.save(ur);
+			return "redirect:/";
+		}
+
+	}
 
 	@GetMapping("/user/{id}")
 	public String user(Model model, @PathVariable(name = "id") long id) {
@@ -189,6 +211,8 @@ public class MainController {
 			return "user_create";
 		} else {
 			userRepo.save(user);
+			UserRole ur = new UserRole(user.getId());
+			userRoleRepo.save(ur);
 			return "redirect:/users";
 		}
 
