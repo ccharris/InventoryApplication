@@ -29,11 +29,7 @@ CREATE TABLE IF NOT EXISTS inventoryManagement.products (
   CREATE TABLE IF NOT EXISTS inventoryManagement.orders (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL,
-  transaction_date VARCHAR(150) NOT NULL DEFAULT GETDATE(),
+  product_id INT UNSIGNED NOT NULL,
+  transaction_date VARCHAR(45) NOT NULL,
   PRIMARY KEY (id));
   
-  CREATE TABLE IF NOT EXISTS inventoryManagement.order_items (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  order_id INT UNSIGNED NOT NULL,
-  item_id INT UNSIGNED NOT NULL,
-  PRIMARY KEY (id));

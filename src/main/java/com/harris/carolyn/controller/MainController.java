@@ -1,9 +1,6 @@
 package com.harris.carolyn.controller;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.validation.Valid;
 
@@ -18,10 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.harris.carolyn.beans.Order;
 import com.harris.carolyn.beans.Product;
 import com.harris.carolyn.beans.User;
 import com.harris.carolyn.beans.UserRole;
-import com.harris.carolyn.repository.OrderItemRepository;
 import com.harris.carolyn.repository.OrderRepository;
 import com.harris.carolyn.repository.ProductRepository;
 import com.harris.carolyn.repository.UserRepository;
@@ -39,8 +36,7 @@ public class MainController {
 	private UserRoleRepository userRoleRepo;
 	@Autowired
 	private OrderRepository orderRepo;
-	@Autowired
-	private OrderItemRepository orderItemRepo;
+
 
 	@GetMapping("")
 	public String index(Model model) {
@@ -231,15 +227,78 @@ public class MainController {
 	
 	@GetMapping("/orders")
 	public String orders(Model model) throws SQLException {
-		model.addAttribute("products", productRepo.findAll());
-		model.addAttribute("users", userRepo.findAll());
 		model.addAttribute("orders", orderRepo.findAll());
-		model.addAttribute("orderitems", orderItemRepo.findAll());
-		Connection conn = null;
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT o.id, o.date, u.id, u.email, p.name, p.price FROM orders o INNER JOIN users u on o.user_id = u.id INNER JOIN orderitems oi on o.id = oi.order_id  INNER JOIN products pon p.id = oi.product_id");
-		model.addAttribute(rs);
 		return "orders";
 	}
 
+	@GetMapping("/order/{id}")
+	public String order(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Order o = orderRepo.findOne(id);
+		model.addAttribute("order", o);
+		return "order_detail";
+	}
+
+	@GetMapping("/order/{id}/edit")
+	public String orderEdit(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Order o = orderRepo.findOne(id);
+		model.addAttribute("order", o);
+		model.addAttribute("users", userRepo.findAll());
+		model.addAttribute("products", productRepo.findAll());
+		return "order_edit";
+	}
+
+	@PostMapping("/order/{id}/edit")
+	public String orderEditSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid Order order,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("order", order);
+			return "order_edit";
+		} else {
+			orderRepo.save(order);
+			return "redirect:/order/" + order.getId();
+		}
+
+	}
+	
+	@GetMapping("/order/{id}/delete")
+	public String orderDelete(Model model, @PathVariable(name = "id") long id) {
+		model.addAttribute("id", id);
+		Order o = orderRepo.findOne(id);
+		model.addAttribute("order", o);
+		return "order_delete";
+	}
+
+	@PostMapping("/order/{id}/delete")
+	public String orderDeleteSave(@PathVariable(name = "id") long id, @ModelAttribute @Valid Order order,
+			BindingResult result, Model model) {
+
+			orderRepo.delete(order);
+			return "redirect:/orders";
+
+	}
+	@GetMapping("/order/create")
+	public String orderCreate(Model model) {
+
+		model.addAttribute(new Order(new Product(), new User()));
+		model.addAttribute("users", userRepo.findAll());
+		model.addAttribute("products", productRepo.findAll());
+		return "order_create";
+	}
+
+	@PostMapping("/order/create")
+	public String orderCreateSave(@ModelAttribute @Valid Order order,
+			BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("order", order);
+			return "order_create";
+		} else {
+			orderRepo.save(order);
+			
+			return "redirect:/orders";
+		}
+
+	}
 }

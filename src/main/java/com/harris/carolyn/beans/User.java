@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -17,6 +18,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
 	
 	@Size(max = 45, min = 2)
 	private String firstName;
@@ -36,6 +38,7 @@ public class User {
 	private String password;
 	
 	private Boolean active;
+
 	
 	public Boolean getActive() {
 		return active;
