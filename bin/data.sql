@@ -20,7 +20,9 @@ insert into inventoryManagement.user_roles (user_id, role) values ((select id fr
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'charris@yarnbarn.com'), 'USER');
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'poconnor@email.com'), 'USER');
 
-insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (1, 1, 'Tuesday');
-insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (2, 2, 'Wednesday');
-insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (3, 3, 'Thursday');
+insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (1, 1, 'January 30th, 2016');
+insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (2, 2, 'October 2nd, 2016');
+insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (3, 2, 'October 30th, 2016');
+insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (5, 7, 'November 3rd, 2016');
+insert into inventoryManagement.orders (user_id, product_id, transaction_date) values (4, 5, 'July 30th, 2016');
 
