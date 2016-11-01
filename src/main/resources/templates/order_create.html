@@ -15,7 +15,7 @@
               <option th:each="user : ${users}" 
                       th:value="${user.id}" 
                       th:selected="*{user.id} == ${user.id}"
-                      th:text="${user.firstName}"></option>
+                      th:text="${user.firstName} + ' ' + ${user.lastName}"></option>
               </select>
               <span class="alert alert-warning" th:if="${#fields.hasErrors('user.id')}" th:errors="*{user.id}">User ID Error</span>
           </div>
