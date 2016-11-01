@@ -1,5 +1,10 @@
 package com.harris.carolyn.controller;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.harris.carolyn.beans.Product;
 import com.harris.carolyn.beans.User;
 import com.harris.carolyn.beans.UserRole;
+import com.harris.carolyn.repository.OrderItemRepository;
+import com.harris.carolyn.repository.OrderRepository;
 import com.harris.carolyn.repository.ProductRepository;
 import com.harris.carolyn.repository.UserRepository;
 import com.harris.carolyn.repository.UserRoleRepository;
@@ -30,6 +37,10 @@ public class MainController {
 	private UserRepository userRepo;
 	@Autowired
 	private UserRoleRepository userRoleRepo;
+	@Autowired
+	private OrderRepository orderRepo;
+	@Autowired
+	private OrderItemRepository orderItemRepo;
 
 	@GetMapping("")
 	public String index(Model model) {
@@ -216,6 +227,19 @@ public class MainController {
 			return "redirect:/users";
 		}
 
+	}
+	
+	@GetMapping("/orders")
+	public String orders(Model model) throws SQLException {
+		model.addAttribute("products", productRepo.findAll());
+		model.addAttribute("users", userRepo.findAll());
+		model.addAttribute("orders", orderRepo.findAll());
+		model.addAttribute("orderitems", orderItemRepo.findAll());
+		Connection conn = null;
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT o.id, o.date, u.id, u.email, p.name, p.price FROM orders o INNER JOIN users u on o.user_id = u.id INNER JOIN orderitems oi on o.id = oi.order_id  INNER JOIN products pon p.id = oi.product_id");
+		model.addAttribute(rs);
+		return "orders";
 	}
 
 }

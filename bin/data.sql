@@ -19,3 +19,11 @@ insert into inventoryManagement.user_roles (user_id, role) values ((select id fr
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'shaggard@email.com'), 'USER');
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'charris@yarnbarn.com'), 'USER');
 insert into inventoryManagement.user_roles (user_id, role) values ((select id from inventoryManagement.users where email = 'poconnor@email.com'), 'USER');
+
+insert into inventoryManagement.orders (user_id, transaction_date) values (1, (select convert(varchar(20), getdate(), 100)));
+insert into inventoryManagement.orders (user_id, transaction_date) values (2, (select convert(varchar(20), getdate(), 100)));
+insert into inventoryManagement.orders (user_id, transaction_date) values (3, (select convert(varchar(20), getdate(), 100)));
+
+insert into inventoryManagement.order_items (order_id, item_id) values (1, 1);
+insert into inventoryManagement.order_items (order_id, item_id) values (1, 2);
+insert into inventoryManagement.order_items (order_id, item_id) values (1, 3);

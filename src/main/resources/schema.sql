@@ -17,11 +17,23 @@ CREATE TABLE IF NOT EXISTS inventoryManagement.products (
   password VARCHAR(45) NOT NULL,
   email VARCHAR(128) NULL,
   phone_number VARCHAR(13) NULL,
-   active tinyint(1) NOT NULL DEFAULT 1,
+  active tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (id));
 
   CREATE TABLE IF NOT EXISTS inventoryManagement.user_roles (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT UNSIGNED NOT NULL,
   role VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id));
+  
+  CREATE TABLE IF NOT EXISTS inventoryManagement.orders (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT UNSIGNED NOT NULL,
+  transaction_date VARCHAR(150) NOT NULL DEFAULT GETDATE(),
+  PRIMARY KEY (id));
+  
+  CREATE TABLE IF NOT EXISTS inventoryManagement.order_items (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  order_id INT UNSIGNED NOT NULL,
+  item_id INT UNSIGNED NOT NULL,
   PRIMARY KEY (id));
